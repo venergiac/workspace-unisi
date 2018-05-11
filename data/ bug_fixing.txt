@@ -1,0 +1,64 @@
+1BAB13EB3243DACBA4BED21B3A535E51
+
+
+        private List<int> BestSequence2(List<Counter> sequence, ROIList rois)
+        {
+            int i = 0;
+            List<Counter> sequenceToMatch = new List<Counter>();
+            foreach (ROI r in rois.List)
+            {
+                sequenceToMatch.Add(new Counter(i++, r.Id));
+            }
+
+            List<int> ret = new List<int>(0);
+            List<string> buffer = new List<string>(0);
+            Explore(null, 0, buffer, sequence, sequenceToMatch, ref ret);
+            return ret;
+        }
+
+        private void Explore(string symbol, int idx, List<string> buffer, List<Counter> sequence, List<Counter> target, ref List<int> ret)
+        {
+            if (symbol!=null)
+            {
+                buffer.Add(symbol);
+            }
+            Debug.WriteLine(String.Join(" ", buffer.ToArray()));
+            for (int i=idx; i< target.Count; i++)
+            {
+                Explore(target[i].label, i+1, new List<string>(buffer), sequence, target, ref ret);
+            }
+
+            List<int> ret1 = Test(sequence, buffer);
+            if (ret1!=null && ret1.Count>ret.Count)
+            {
+                ret = ret1;
+            }
+        }
+
+        private List<int> Test(List<Counter> sequence, List<string> target)
+        {
+            bool match = false;
+            List<int> ret = new List<int>();
+            int idx = 0;
+
+            foreach (string t in target)
+            {
+                match = false;
+                for (int i=idx; i<sequence.Count; i++)
+                {
+                    Counter c = sequence[i];
+                    if(c.label.Equals(t))
+                    {
+                        idx = i+1;
+                        match = true;
+                        ret.Add(i);
+                        break;
+                    }
+                }
+                if (!match) return null;
+            }
+
+            if (match) Debug.WriteLine("match:" + String.Join(" ", ret.ToArray()));
+            if (match) return ret;
+            else return null;
+        }

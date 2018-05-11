@@ -1,0 +1,112 @@
+using EVALab.Analysis;
+using EVALab.Analysis.Data;
+using EVALab.Analysis.Fixation;
+using EVALab.Analysis.Indicator;
+using EVALab.Analysis.ROI;
+using EVALab.Util.Statistics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+
+namespace EVALabAnalysis
+{
+    static class Script
+    {
+
+        public static string GetFileName(string roiPath, string target)
+        {
+            string[] rois = Directory.GetFiles(roiPath);
+            foreach (string roi in rois) 
+            {
+                string roiName = Path.GetFileNameWithoutExtension(roi);
+                if (roiName!=null && roiName.Length>0 && target.IndexOf(roiName)>=0) return roi;
+            }
+            return null;
+        }
+
+        static void Main()
+        {
+
+            //INIT
+            AnalysisManager manager = AnalysisManager.Instance;
+            string projectname = "C:\\Users\\IEUser\\Documents\\AnalisiTMT.pexml";
+            string projectnameOut = "C:\\Users\\IEUser\\Documents\\AnalisiTMT_Out.pexml";
+            string roiPath = "C:\\Users\\IEUser\\Documents\\regions";
+
+            //OPEN PROJECT
+            Stream str = File.OpenRead(projectname);
+            manager.OpenAnalysis(str);
+            str.Close();
+
+            //FOREACH DATA
+            foreach (Trial trial in manager.Trials)
+            {
+                List<DataList> dataList = trial.Data;
+                String trialName = trial.Name;
+                Debug.WriteLine( trialName);
+                for (int i=0; i<dataList.Count; i++ )
+                {
+                    DataList data = dataList[i];
+                    String roiFileName = GetFileName(roiPath, data.Name); //get name from ROI
+                    
+
+                    if (roiFileName!=null)
+                    {
+
+                        // OPEN ROI
+                        ROIList roiList = manager.CreateROIListFromDataFile(roiFileName);
+                        Debug.WriteLine("\t" + data.Name + " roiFileName: " + roiFileName);
+
+
+                        // compute sequencing
+                        Debug.WriteLine("\t\t analyze!");
+                        manager.AnalyzeROIs(data, roiList);
+
+                        List<double> arr = new List<double>();
+                        foreach (Fixation fix in data.Fixations.List)
+                        {
+                            arr.Add(fix.NearestROI.Distance(fix.X, fix.Y));
+
+                        }
+
+                        DescriptiveResult result = Descriptive.Compute(arr.ToArray());
+                        double nroi = result.Mean;
+
+                        //COMPUTER NEAR ROI
+                        Debug.WriteLine("\t\t find NROI!");
+                        manager.FindNearestROIFromFixations(ref data, roiList);
+
+                        //EXPORT PROJECT on CSV
+                        Debug.WriteLine("\t\t EXPORT!");
+
+                        double sequencing = 0;
+                        foreach (Indicator ind in data.Indicators.List)
+                        {
+                            if (ind.Name.Equals("sequencing"))
+                            {
+                                sequencing = ind.Value;
+                            }
+                        }
+                        Console.WriteLine("%s\t%s\t%s", trialName, sequencing, nroi);
+
+                    } else
+                    {
+                        Debug.WriteLine("NO ROI FOR \t" + data.Name );
+                    }
+
+                }
+
+
+            }
+
+            //SAVE PROJECT
+            str = str = File.Open(projectnameOut, FileMode.OpenOrCreate);
+            //manager.SaveAnalysis(str);
+            str.Close();
+        }
+    }
+
+}

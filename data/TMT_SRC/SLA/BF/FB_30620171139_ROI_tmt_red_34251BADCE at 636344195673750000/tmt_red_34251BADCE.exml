@@ -1,0 +1,13 @@
+<task id="ROI" version="1.0">
+	<name>tmt_red_34251BADCE</name>
+	<description>tmt_red_34251BADCE</description>
+	<settings>
+	<param name="timeWindow">5000</param>
+	<param name="target">exclusive</param>
+		<param name="commands"><![CDATA[
+ACTION PutInAt center.bmp 0 0 0 1000
+ACTION PutInAt tmt_red_34251BADCE.bmp 0 0 1000 20000
+STOP 20000
+]]></param>
+	</settings>
+</task>

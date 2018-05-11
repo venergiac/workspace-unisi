@@ -1,0 +1,32 @@
+Experiment type = 2   -   Tms picture stimolous
+
+
+
+Number of used picture = 9
+
+Picture 1 ->  Disp time:1000, Side picure: NONE  -> Tms stomolo - NONE
+
+Picture 2 ->  Disp time:10000, Side picure: NONE  -> Tms stomolo - NONE
+
+Picture 3 ->  Disp time:1000, Side picure: NONE  -> Tms stomolo - NONE
+
+Picture 4 ->  Disp time:10000, Side picure: NONE  -> Tms stomolo - NONE
+
+Picture 5 ->  Disp time:1000, Side picure: NONE  -> Tms stomolo - NONE
+
+Picture 6 ->  Disp time:10000, Side picure: NONE  -> Tms stomolo - NONE
+
+Picture 7 ->  Disp time:1000, Side picure: NONE  -> Tms stomolo - NONE
+
+Picture 8 ->  Disp time:10000, Side picure: NONE  -> Tms stomolo - NONE
+
+Picture 9 ->  Disp time:1000, Side picure: NONE  -> Tms stomolo - NONE
+
+
+
+
+Number of acquired data: 10450
+
+Mean acquisition frequency: 231.887 Hz
+
+All time are il milliseconds

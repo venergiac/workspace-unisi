@@ -1,0 +1,5 @@
+<experiment><type><id>tmt_red_ECBAD42135 at 636325200614843750</id><date>giovedì 8 giugno 2017</date><settings><param name="target">exclusive</param><param name="commands">
+ACTION PutInAt center.bmp 0 0 0 1000
+ACTION PutInAt tmt_red_ECBAD42135.bmp 0 0 1000 20000
+STOP 20000
+</param><param name="timeWindow">5000</param><param name="file">C:\Documents and Settings\francesco\Desktop\Mimma\tmt experiments 20000\tmt_red_ECBAD42135.exml</param><param name="path">C:\Documents and Settings\francesco\Desktop\Mimma\tmt experiments 20000</param></settings></type><settings id="FT_862017121_CALIBRATION"><subject><name><![CDATA[FRANCA]]></name><surname><![CDATA[TAMINI]]></surname><gender>F</gender><birth><![CDATA[08/06/2017]]></birth><details><![CDATA[]]></details></subject><experiment><name><![CDATA[Calibration]]></name><date><![CDATA[08/06/2017 12:01:36]]></date><type><![CDATA[]]></type><width><![CDATA[100]]></width><distance><![CDATA[75]]></distance></experiment></settings><data><![CDATA[]]></data></experiment>
